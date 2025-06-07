@@ -1,1 +1,198 @@
+<!DOCTYPE html >
+< html  lang =" en " >
+<头>
+    < meta  charset =" UTF-8 " >
+    < meta  name ="视口" content ="宽度=设备宽度，初始比例=1.0 " >
+    < title > Neon Runner - 终极赛博朋克赛车体验 | 免费在线畅玩</ title >
+    < meta  name =" description " content ="在终极赛博朋克赛车游戏《霓虹跑者》中驰骋在霓虹闪烁的赛博高速公路上。体验高速刺激、惊艳的视觉效果和令人上瘾的游戏体验。 " >
+    < link  rel =" canonical " href =" https://neonrunner.games/ " >
+    
+    <样式>
+        * {
+            边距： 0；
+            填充： 0；
+            盒子尺寸：边框；
+        }
+        
+        ：根{
+            --苹果蓝： # 007aff；
+            --苹果蓝色暗色： # 0051d0；
+            --苹果灰色： # 8e8e93；
+            --苹果灰色光： # f2f2f7；
+            --苹果灰色暗： # 1c1c1e；
+            --苹果文本： # 1d1d1f；
+            --apple-secondary ： # 86868b；
+            –霓虹青色： # 00ffff；
+            –霓虹紫： # ff00ff；
+        }
+        
+        身体{
+            字体系列： -apple-system 、 BlinkMacSystemFont 、 'Segoe UI' 、 system-ui 、 sans-serif；
+            行高： 1.6；
+            颜色： var（--apple-text）；
+            背景： 线性渐变（135度， # 667eea  0 %， # 764ba2  100 %）；
+            最小高度： 100 vh；
+        }
+        
+        。容器{
+            最大宽度： 1200像素；
+            边距： 0自动；
+            填充： 0  20像素；
+        }
+        
+        /* 页眉样式 */
+        标题{
+            背景： rgba（255，255，255，0.95 ）；​ ​​ ​​ 
+            背景滤镜： 模糊（20像素）；
+            -webkit-backdrop-filter : 模糊( 20像素) ;
+            盒子阴影： 0  1像素 20像素 rgba（0，0，0，0.1 ）；​​​​   
+            填充： 16像素 0；
+            位置：粘性；
+            顶部： 0；
+            z 索引： 1000；
+            底部边框： 1 px实线rgba ( 255 ,  255 ,  255 ,  0.2 )；
+        }
+        
+        .标题内容{
+            显示：弹性；
+            对齐内容：间距；
+            对齐项目：居中；
+        }
+        
+        。标识{
+            字体大小： 28像素；
+            字体粗细： 700；
+            颜色： var（--apple-blue）；
+            文字装饰：无；
+            字母间距： -0.5 px；
+        }
+        
+        导航 ul {
+            显示：弹性；
+            列表样式：无；
+            间隙： 32像素；
+        }
+        
+        导航 {​
+            文字装饰：无；
+            颜色： var（--apple-text）；
+            字体粗细： 500；
+            字体大小： 17像素；
+            过渡：全部0.3秒轻松；
+            填充： 8 px  0；
+        }
+        
+        导航 a :悬停{
+            颜色： var（--apple-blue）；
+        }
+        
+        /* 英雄部分 */
+        .英雄{
+            填充： 100像素 0；
+            文本对齐：居中；
+            背景： 线性渐变（135度， # 1a1a2e  0 %， # 16213e  50 %， # 0f3460  100 %）；
+            颜色：白色；
+            位置：相对；
+            溢出：隐藏；
+        }
+        
+        .英雄::之前{
+            内容： '' ;
+            位置：绝对；
+            顶部： 0；
+            左： 0；
+            右： 0；
+            底部： 0；
+            背景： 
+                径向渐变（圆圈位于20 %  80 %， rgba（0，255，255，0.15 ） 0 %，透明50 %），​​ ​ 
+                径向渐变（圆圈位于80 %  20 %， rgba（255，0，255，0.15 ） 0 %，透明50 %）；​​  
+            动画： neonPulse 4 s缓入缓出无限交替；
+        }
+        
+        @keyframes neonPulse{
+            0 % {不透明度： 0.3；}
+            100 % {不透明度： 0.8；}
+        }
+        
+        h1 {
+            字体大小： clamp（3 rem， 6 vw， 5 rem）；
+            字体粗细： 800；
+            下边距： 24像素；
+            位置：相对；
+            z 索引： 2；
+            背景： 线性渐变（45度， var（-- neon-cyan）， var（-- neon-purple））；
+            -webkit-背景剪辑：文本；
+                文档.getElementById （' scoreDisplay ' ）. textContent = this.score ;​  
+                文档.getElementById （' levelDisplay ' ）. textContent = this.level ;​  
+            }
+            
+            游戏循环（） {
+                这个.更新( ) ；
+                这.绘制（）；
+                requestAnimationFrame ( ( )  =  > this.gameLoop ( ) ) ;​
+            }
+            
+            重新启动（） {
+                这个。gameStarted = false  ；​ 
+                这。gameOver  =  false ;
+                这个.分数 =  0 ；
+                这个。速度 =  0 ；
+                这个.级别 =  1 ；
+                这.障碍 =  [ ] ;
+                这个.powerUps = [ ] ;​  
+                这个.粒子 =  [ ] ；
+                这个.player.x =这个.canvas.width / 2 -这个.player.width / 2 ;​​​ ​​​​​​       
+                document.getElementById ( ' gameInstructions ' ) . classList.remove ( ' hidden ' ) ;
+                这.updateUI （）；​
+            }
+        }
+        
+        // 页面加载时初始化游戏
+        让 游戏；
+        document.addEventListener ( ' DOMContentLoaded ' , function ( ) {  
+            // 短暂延迟以确保画布尺寸合适
+            设置超时（（） =>  {
+                游戏 = 新的 NeonRunner ( ) ;
+                
+                // 添加重启功能
+                document.addEventListener ( 'keydown ' , ( e ) = > {   
+                    如果 （游戏。gameOver && （e。key === ' ' || e。key === ' Enter ' ））{​ ​        
+                        游戏.重启( ) ；
+                    }
+                } ）；
+                
+                document.getElementById ( ' gameCanvas' ) . addEventListener ( '点击' , ( ) = > {   
+                    如果 （游戏。游戏结束） {
+                        游戏.重启( ) ；
+                    }
+                } ）；
+            } ,  100 ) ;
+        } ）；
 
+        // 平滑滚动导航
+        document.querySelectorAll ( 'a[ href ^="#"]' ) . forEach ( anchor = > {  
+            锚点. addEventListener ( '点击' ,  function  ( e )  {
+                e.preventDefault ( ) ；​​
+                const  target  =  document.querySelector ( this.getAttribute ( ' href ' ) ) ;​​
+                如果 （目标） {
+                    目标.scrollIntoView （{​
+                        行为：'平滑' ，
+                        块：'开始'
+                    } ）；
+                }
+            } ）；
+        } ）；
+
+        // 为移动触摸添加一些视觉反馈
+        document.querySelectorAll ( ' . feature -card, .play-button' ) . forEach ( element => {  
+            element.addEventListener ( ' touchstart ' , function ( ) {  
+                this.style.transform = 'scale ( 0.98 ) ' ;  
+            } ）；
+            
+            元素.addEventListener ( 'touchend ' ,函数( ) {  
+                这.样式.变换 =  '' ;
+            } ）；
+        } ）；
+    </脚本>
+</主体>
+</html>
