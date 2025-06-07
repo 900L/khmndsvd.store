@@ -1,1 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Runner - Ultimate Cyberpunk Racing Experience | Play Free Online</title>
+    <meta name="description" content="Race through neon-lit cyber highways in Neon Runner, the ultimate cyberpunk racing game. Experience high-speed thrills with stunning visuals and addictive gameplay.">
+    <link rel="canonical" href="https://neonrunner.games/">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --apple-blue: #007aff;
+            --apple-blue-dark: #0051d0;
+            --apple-gray: #8e8e93;
+            --apple-gray-light: #f2f2f7;
+            --apple-gray-dark: #1c1c1e;
+            --apple-text: #1d1d1f;
+            --apple-secondary: #86868b;
+            --neon-cyan: #00ffff;
+            --neon-purple: #ff00ff;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--apple-text);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--apple-blue);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--apple-text);
+            font-weight: 500;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            padding: 8px 0;
+        }
+        
+        nav a:hover {
+            color: var(--apple-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.15) 0%, transparent 50%);
+            animation: neonPulse 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neonPulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+        
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+        
+        .tagline {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            margin-bottom: 48px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            font-weight: 400;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--apple-blue), var(--apple-blue-dark));
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 122, 255, 0.4);
+            position: relative;
+            z-index: 2;
+            border: 2px solid transparent;
+        }
+        
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 122, 255, 0.6);
+            background: linear-gradient(135deg, var(--apple-blue-dark), var(--apple-blue));
+        }
+        
+        /* Game Section */
+        .game-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--apple-text);
+            text-align: center;
+            letter-spacing: -1px;
+        }
+        
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .game-wrapper {
+            position: relative;
+            margin-bottom: 32px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: pointer;
+        }
+        
+        .game-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--neon-cyan);
+            font-size: 18px;
+            font-weight: 600;
+            z-index: 10;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+        
+        .game-instructions {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        .game-instructions.hidden {
+            display: none;
+        }
+        
+        .game-placeholder {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .game-placeholder h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--neon-cyan);
+        }
+        
+        .controls-info {
+            background: var(--apple-gray-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
+            color: var(--apple-secondary);
+            font-size: 15px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: var(--apple-gray-light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 48px 32px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--apple-blue), #5856d6);
+            border-radius: 20px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--apple-text);
+        }
+        
+        .feature-card p {
+            color: var(--apple-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            color: var(--apple-secondary);
+        }
+        
+        .about p:first-child {
+            font-size: 20px;
+            color: var(--apple-text);
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--apple-gray-dark);
+            color: white;
+            padding: 60px 0 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--apple-blue);
+        }
+        
+        .copyright {
+            opacity: 0.6;
+            font-size: 15px;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .game-iframe {
+                height: 400px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .feature-card {
+                padding: 40px 24px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .game-iframe {
+                height: 320px;
+                font-size: 16px;
+            }
+            
+            .game-section,
+            .features,
+            .about {
+                padding: 60px 0;
+            }
+            
+            .feature-card {
+                padding: 32px 20px;
+            }
+            
+            .feature-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 24px;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 255, 255, 0.3);
+            border-top: 3px solid var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Neon Runner</a>
+                <nav>
+                    <ul>
+                        <li><a href="#game">Play Now</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Support</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
+    <section class="hero">
+        <div class="container">
+            <h1>Neon Runner</h1>
+            <p class="tagline">Race through neon-lit cyber highways in the ultimate cyberpunk racing experience.</p>
+            <a href="#game" class="play-button">Start Racing</a>
+        </div>
+    </section>
+
+    <section id="game" class="game-section">
+        <div class="container">
+            <h2>Play Neon Runner Online</h2>
+            <div class="game-container">
+                <div class="game-wrapper">
+                    <div class="game-iframe" id="gameContainer">
+                        <canvas id="gameCanvas" class="game-canvas"></canvas>
+                        <div class="game-overlay" id="gameUI">
+                            <div>Speed: <span id="speedDisplay">0</span> km/h</div>
+                            <div>Score: <span id="scoreDisplay">0</span></div>
+                            <div>Level: <span id="levelDisplay">1</span></div>
+                        </div>
+                        <div class="game-instructions" id="gameInstructions">
+                            <h3 style="color: #00ffff; margin-bottom: 20px;">🏎️ Neon Runner</h3>
+                            <p style="font-size: 18px; margin-bottom: 10px;">Use ARROW KEYS or WASD to steer</p>
+                            <p style="font-size: 16px; opacity: 0.8;">Avoid obstacles and collect power-ups!</p>
+                            <p style="font-size: 14px; margin-top: 20px; opacity: 0.6;">Click anywhere to start racing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls-info">
+                    <strong>Controls:</strong> Use WASD or Arrow Keys to steer • Space to boost • ESC to pause
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Game Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏁</div>
+                    <h3>High-Speed Racing</h3>
+                    <p>Experience adrenaline-pumping races through futuristic cyberpunk cities with realistic physics and responsive controls that adapt to any device.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌆</div>
+                    <h3>Neon-Lit Environments</h3>
+                    <p>Immerse yourself in stunning neon-soaked landscapes with dynamic lighting effects, rain-slicked streets, and atmospheric cyberpunk aesthetics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Power-Ups & Boosts</h3>
+                    <p>Collect energy cells, nitro boosts, and special abilities to gain competitive advantages and achieve record-breaking lap times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Championship Mode</h3>
+                    <p>Progress through multiple racing circuits, unlock new vehicles, and compete for the ultimate cyberpunk racing championship title.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Neon Runner</h2>
+            <div class="about-content">
+                <p>Neon Runner delivers an electrifying cyberpunk racing experience that combines high-octane speed with stunning visual aesthetics, creating an unforgettable gaming adventure for players of all skill levels.</p>
+                
+                <p>Set in a dystopian future where neon lights illuminate rain-soaked highways, players pilot advanced racing vehicles through sprawling megacities filled with towering skyscrapers, holographic advertisements, and atmospheric fog. The game features a sophisticated physics engine that provides realistic vehicle handling while maintaining accessible controls for both casual and hardcore racing enthusiasts.</p>
+                
+                <p>Each race takes place across meticulously designed tracks that showcase the beauty and danger of the cyberpunk world. From underground tunnels illuminated by pulsing neon strips to elevated highways suspended high above the city, every environment tells a story while providing unique racing challenges and strategic opportunities.</p>
+                
+                <p>The game incorporates progressive difficulty scaling, ensuring that newcomers can enjoy immediate thrills while experienced players face increasingly complex challenges. Multiple game modes include time trials, championship races, and special event competitions that test different aspects of racing skill and strategy.</p>
+                
+                <p>Built using cutting-edge web technologies, Neon Runner runs smoothly across all modern devices and browsers. The responsive design automatically adapts to different screen sizes, while touch controls on mobile devices provide the same precision and responsiveness as keyboard inputs on desktop computers. Advanced optimization ensures consistent frame rates and minimal loading times, regardless of device specifications.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    <p>&copy; 2025 Neon Runner Games. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Support Center</a>
+                    <a href="#">Community</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Neon Runner Game Implementation
+        class NeonRunner {
+            constructor() {
+                this.canvas = document.getElementById('gameCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.gameStarted = false;
+                this.gameOver = false;
+                this.score = 0;
+                this.speed = 0;
+                this.level = 1;
+                this.maxSpeed = 200;
+                
+                // Player car
+                this.player = {
+                    x: 0,
+                    y: 0,
+                    width: 40,
+                    height: 60,
+                    speed: 5
+                };
+                
+                // Obstacles and power-ups
+                this.obstacles = [];
+                this.powerUps = [];
+                this.particles = [];
+                
+                // Controls
+                this.keys = {};
+                
+                this.init();
+            }
+            
+            init() {
+                this.resizeCanvas();
+                this.setupEventListeners();
+                this.gameLoop();
+                
+                // Initial player position
+                this.player.x = this.canvas.width / 2 - this.player.width / 2;
+                this.player.y = this.canvas.height - this.player.height - 50;
+            }
+            
+            resizeCanvas() {
+                const container = document.getElementById('gameContainer');
+                this.canvas.width = container.clientWidth;
+                this.canvas.height = container.clientHeight;
+            }
+            
+            setupEventListeners() {
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    this.keys[e.key.toLowerCase()] = true;
+                    if (!this.gameStarted && (e.key === ' ' || e.key === 'Enter')) {
+                        this.startGame();
+                    }
+                });
+                
+                document.addEventListener('keyup', (e) => {
+                    this.keys[e.key.toLowerCase()] = false;
+                });
+                
+                // Click to start
+                this.canvas.addEventListener('click', () => {
+                    if (!this.gameStarted) {
+                        this.startGame();
+                    }
+                });
+                
+                // Window resize
+                window.addEventListener('resize', () => {
+                    this.resizeCanvas();
+                    this.player.x = Math.min(this.player.x, this.canvas.width - this.player.width);
+                });
+            }
+            
+            startGame() {
+                this.gameStarted = true;
+                this.gameOver = false;
+                document.getElementById('gameInstructions').classList.add('hidden');
+            }
+            
+            update() {
+                if (!this.gameStarted || this.gameOver) return;
+                
+                // Update speed and score
+                this.speed = Math.min(this.speed + 0.1, this.maxSpeed);
+                this.score += Math.floor(this.speed / 10);
+                this.level = Math.floor(this.score / 1000) + 1;
+                
+                // Player movement
+                if ((this.keys['a'] || this.keys['arrowleft']) && this.player.x > 0) {
+                    this.player.x -= this.player.speed;
+                }
+                if ((this.keys['d'] || this.keys['arrowright']) && this.player.x < this.canvas.width - this.player.width) {
+                    this.player.x += this.player.speed;
+                }
+                
+                // Spawn obstacles
+                if (Math.random() < 0.02 + this.level * 0.005) {
+                    this.obstacles.push({
+                        x: Math.random() * (this.canvas.width - 40),
+                        y: -60,
+                        width: 40,
+                        height: 60,
+                        speed: 3 + this.level
+                    });
+                }
+                
+                // Spawn power-ups
+                if (Math.random() < 0.008) {
+                    this.powerUps.push({
+                        x: Math.random() * (this.canvas.width - 30),
+                        y: -30,
+                        width: 30,
+                        height: 30,
+                        speed: 2 + this.level / 2
+                    });
+                }
+                
+                // Update obstacles
+                this.obstacles = this.obstacles.filter(obstacle => {
+                    obstacle.y += obstacle.speed;
+                    
+                    // Check collision with player
+                    if (this.checkCollision(this.player, obstacle)) {
+                        this.gameOver = true;
+                        return false;
+                    }
+                    
+                    return obstacle.y < this.canvas.height;
+                });
+                
+                // Update power-ups
+                this.powerUps = this.powerUps.filter(powerUp => {
+                    powerUp.y += powerUp.speed;
+                    
+                    // Check collision with player
+                    if (this.checkCollision(this.player, powerUp)) {
+                        this.score += 100;
+                        this.createParticles(powerUp.x, powerUp.y);
+                        return false;
+                    }
+                    
+                    return powerUp.y < this.canvas.height;
+                });
+                
+                // Update particles
+                this.particles = this.particles.filter(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.life--;
+                    return particle.life > 0;
+                });
+                
+                this.updateUI();
+            }
+            
+            checkCollision(rect1, rect2) {
+                return rect1.x < rect2.x + rect2.width &&
+                       rect1.x + rect1.width > rect2.x &&
+                       rect1.y < rect2.y + rect2.height &&
+                       rect1.y + rect1.height > rect2.y;
+            }
+            
+            createParticles(x, y) {
+                for (let i = 0; i < 10; i++) {
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        vx: (Math.random() - 0.5) * 10,
+                        vy: (Math.random() - 0.5) * 10,
+                        life: 30,
+                        color: `hsl(${Math.random() * 60 + 180}, 100%, 50%)`
+                    });
+                }
+            }
+            
+            draw() {
+                // Clear canvas with gradient background
+                const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+                gradient.addColorStop(0, '#1a1a2e');
+                gradient.addColorStop(1, '#16213e');
+                this.ctx.fillStyle = gradient;
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw road lines
+                this.drawRoadLines();
+                
+                if (this.gameStarted && !this.gameOver) {
+                    // Draw player car
+                    this.drawCar(this.player.x, this.player.y, '#00ffff', true);
+                    
+                    // Draw obstacles
+                    this.obstacles.forEach(obstacle => {
+                        this.drawCar(obstacle.x, obstacle.y, '#ff0080', false);
+                    });
+                    
+                    // Draw power-ups
+                    this.powerUps.forEach(powerUp => {
+                        this.drawPowerUp(powerUp.x, powerUp.y);
+                    });
+                    
+                    // Draw particles
+                    this.particles.forEach(particle => {
+                        this.ctx.fillStyle = particle.color;
+                        this.ctx.globalAlpha = particle.life / 30;
+                        this.ctx.fillRect(particle.x, particle.y, 4, 4);
+                        this.ctx.globalAlpha = 1;
+                    });
+                }
+                
+                // Draw game over screen
+                if (this.gameOver) {
+                    this.drawGameOver();
+                }
+            }
+            
+            drawRoadLines() {
+                this.ctx.strokeStyle = '#444';
+                this.ctx.lineWidth = 4;
+                this.ctx.setLineDash([20, 20]);
+                
+                const lineOffset = (Date.now() * 0.01) % 40;
+                
+                // Center line
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.canvas.width / 2, -lineOffset);
+                this.ctx.lineTo(this.canvas.width / 2, this.canvas.height);
+                this.ctx.stroke();
+                
+                // Side lines
+                const sideOffset = this.canvas.width * 0.15;
+                this.ctx.beginPath();
+                this.ctx.moveTo(sideOffset, -lineOffset);
+                this.ctx.lineTo(sideOffset, this.canvas.height);
+                this.ctx.stroke();
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.canvas.width - sideOffset, -lineOffset);
+                this.ctx.lineTo(this.canvas.width - sideOffset, this.canvas.height);
+                this.ctx.stroke();
+                
+                this.ctx.setLineDash([]);
+            }
+            
+            drawCar(x, y, color, isPlayer) {
+                this.ctx.fillStyle = color;
+                this.ctx.fillRect(x + 10, y, 20, 50);
+                this.ctx.fillRect(x + 5, y + 10, 30, 30);
+                
+                // Add glow effect for player
+                if (isPlayer) {
+                    this.ctx.shadowColor = color;
+                    this.ctx.shadowBlur = 20;
+                    this.ctx.fillRect(x + 10, y, 20, 50);
+                    this.ctx.shadowBlur = 0;
+                }
+                
+                // Wheels
+                this.ctx.fillStyle = '#333';
+                this.ctx.fillRect(x + 2, y + 5, 8, 12);
+                this.ctx.fillRect(x + 30, y + 5, 8, 12);
+                this.ctx.fillRect(x + 2, y + 33, 8, 12);
+                this.ctx.fillRect(x + 30, y + 33, 8, 12);
+            }
+            
+            drawPowerUp(x, y) {
+                this.ctx.fillStyle = '#ffff00';
+                this.ctx.shadowColor = '#ffff00';
+                this.ctx.shadowBlur = 15;
+                
+                // Draw star shape
+                this.ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * 4 * Math.PI) / 5;
+                    const x1 = x + 15 + Math.cos(angle) * 12;
+                    const y1 = y + 15 + Math.sin(angle) * 12;
+                    if (i === 0) this.ctx.moveTo(x1, y1);
+                    else this.ctx.lineTo(x1, y1);
+                }
+                this.ctx.closePath();
+                this.ctx.fill();
+                this.ctx.shadowBlur = 0;
+            }
+            
+            drawGameOver() {
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.ctx.fillStyle = '#ff0080';
+                this.ctx.font = 'bold 48px Arial';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 50);
+                
+                this.ctx.fillStyle = '#00ffff';
+                this.ctx.font = '24px Arial';
+                this.ctx.fillText(`Final Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2);
+                this.ctx.fillText(`Level Reached: ${this.level}`, this.canvas.width / 2, this.canvas.height / 2 + 30);
+                
+                this.ctx.fillStyle = '#fff';
+                this.ctx.font = '18px Arial';
+                this.ctx.fillText('Press SPACE or Click to restart', this.canvas.width / 2, this.canvas.height / 2 + 80);
+            }
+            
+            updateUI() {
+                document.getElementById('speedDisplay').textContent = Math.floor(this.speed);
+                document.getElementById('scoreDisplay').textContent = this.score;
+                document.getElementById('levelDisplay').textContent = this.level;
+            }
+            
+            gameLoop() {
+                this.update();
+                this.draw();
+                requestAnimationFrame(() => this.gameLoop());
+            }
+            
+            restart() {
+                this.gameStarted = false;
+                this.gameOver = false;
+                this.score = 0;
+                this.speed = 0;
+                this.level = 1;
+                this.obstacles = [];
+                this.powerUps = [];
+                this.particles = [];
+                this.player.x = this.canvas.width / 2 - this.player.width / 2;
+                document.getElementById('gameInstructions').classList.remove('hidden');
+                this.updateUI();
+            }
+        }
+        
+        // Initialize game when page loads
+        let game;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Small delay to ensure canvas is properly sized
+            setTimeout(() => {
+                game = new NeonRunner();
+                
+                // Add restart functionality
+                document.addEventListener('keydown', (e) => {
+                    if (game.gameOver && (e.key === ' ' || e.key === 'Enter')) {
+                        game.restart();
+                    }
+                });
+                
+                document.getElementById('gameCanvas').addEventListener('click', () => {
+                    if (game.gameOver) {
+                        game.restart();
+                    }
+                });
+            }, 100);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some visual feedback for mobile touch
+        document.querySelectorAll('.feature-card, .play-button').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
