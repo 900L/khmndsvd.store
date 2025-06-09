@@ -741,7 +741,7 @@
                         vx: (Math.random() - 0.5) * 10,
                         vy: (Math.random() - 0.5) * 10,
                         life: 30,
-                        color: hsl(${Math.random() * 60 + 180}, 100%, 50%)
+                        color: `hsl(${Math.random() * 60 + 180}, 100%, 50%)`
                     });
                 }
             }
@@ -865,8 +865,8 @@
                 
                 this.ctx.fillStyle = '#00ffff';
                 this.ctx.font = '24px Arial';
-                this.ctx.fillText(Final Score: ${this.score}, this.canvas.width / 2, this.canvas.height / 2);
-                this.ctx.fillText(Level Reached: ${this.level}, this.canvas.width / 2, this.canvas.height / 2 + 30);
+                this.ctx.fillText(`Final Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2);
+                this.ctx.fillText(`Level Reached: ${this.level}`, this.canvas.width / 2, this.canvas.height / 2 + 30);
                 
                 this.ctx.fillStyle = '#fff';
                 this.ctx.font = '18px Arial';
