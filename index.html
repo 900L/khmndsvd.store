@@ -946,6 +946,25 @@
                 this.style.transform = '';
             });
         });
-    </script>
+    </script>// Touch controls for mobile
+let touchStartX = 0;
+
+document.getElementById('gameCanvas').addEventListener('touchstart', function (e) {
+    touchStartX = e.touches[0].clientX;
+}, { passive: true });
+
+document.getElementById('gameCanvas').addEventListener('touchmove', function (e) {
+    const touchX = e.touches[0].clientX;
+    const deltaX = touchX - touchStartX;
+
+    if (Math.abs(deltaX) > 30 && game && game.player) {
+        if (deltaX > 0 && game.player.x < game.canvas.width - game.player.width) {
+            game.player.x += game.player.speed;
+        } else if (deltaX < 0 && game.player.x > 0) {
+            game.player.x -= game.player.speed;
+        }
+        touchStartX = touchX;
+    }
+}, { passive: true });
 </body>
 </html>
