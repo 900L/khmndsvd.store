@@ -1,38 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neon Runner - Ultimate Cyberpunk Racing Experience</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Runner - Ultimate Cyberpunk Racing Experience | Play Free Online</title>
+  <meta name="description" content="Race through neon-lit cyber highways in Neon Runner, the ultimate cyberpunk racing game. Experience high-speed thrills with stunning visuals and addictive gameplay.">
+  <link rel="canonical" href="https://neonrunner.games/">
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background: black;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
+      box-sizing: border-box;
     }
-    #gameContainer {
-      width: 100%;
-      height: 100%;
+    :root {
+      --apple-blue: #007aff;
+      --apple-blue-dark: #0051d0;
+      --apple-gray: #8e8e93;
+      --apple-gray-light: #f2f2f7;
+      --apple-gray-dark: #1c1c1e;
+      --apple-text: #1d1d1f;
+      --apple-secondary: #86868b;
+      --neon-cyan: #00ffff;
+      --neon-purple: #ff00ff;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .game-iframe {
       position: relative;
     }
-    #gameCanvas {
+    canvas.game-canvas {
       width: 100%;
-      height: 100%;
+      height: 500px;
       display: block;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     }
-    #gameInstructions {
+    .game-instructions {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: #00ffff;
       text-align: center;
-      font-size: 18px;
-      z-index: 2;
+      color: white;
+      z-index: 20;
+      pointer-events: none;
     }
     .hidden {
       display: none;
@@ -40,12 +53,12 @@
   </style>
 </head>
 <body>
-  <div id="gameContainer">
-    <canvas id="gameCanvas" tabindex="0"></canvas>
-    <div id="gameInstructions">
-      <h3>🏎️ Neon Runner</h3>
-      <p>Tap anywhere to start</p>
-      <p>Move by tapping left/right side</p>
+  <div class="game-iframe" id="gameContainer">
+    <canvas id="gameCanvas" class="game-canvas" tabindex="0"></canvas>
+    <div class="game-instructions" id="gameInstructions">
+      <h3 style="color: #00ffff; margin-bottom: 20px;">🏎️ Neon Runner</h3>
+      <p style="font-size: 18px; margin-bottom: 10px;">Use ARROW KEYS or WASD to steer</p>
+      <p style="font-size: 16px; opacity: 0.8;">Tap or click anywhere to start</p>
     </div>
   </div>
   <script>
@@ -60,8 +73,17 @@
         this.level = 1;
         this.maxSpeed = 200;
 
-        this.player = { x: 0, y: 0, width: 40, height: 60, speed: 5 };
+        this.player = {
+          x: 0,
+          y: 0,
+          width: 40,
+          height: 60,
+          speed: 5
+        };
+
         this.obstacles = [];
+        this.powerUps = [];
+        this.particles = [];
         this.keys = {};
 
         this.init();
@@ -69,45 +91,64 @@
 
       init() {
         this.resizeCanvas();
-        this.setupEvents();
+        this.setupEventListeners();
         this.player.x = this.canvas.width / 2 - this.player.width / 2;
         this.player.y = this.canvas.height - this.player.height - 50;
-        this.loop();
+        this.gameLoop();
       }
 
       resizeCanvas() {
-        this.canvas.width = this.canvas.clientWidth;
-        this.canvas.height = this.canvas.clientHeight;
+        const container = document.getElementById('gameContainer');
+        this.canvas.width = container.clientWidth;
+        this.canvas.height = container.clientHeight;
       }
 
-      setupEvents() {
-        window.addEventListener('resize', () => this.resizeCanvas());
-        document.addEventListener('keydown', e => {
+      setupEventListeners() {
+        document.addEventListener('keydown', (e) => {
           this.keys[e.key.toLowerCase()] = true;
-          if (!this.gameStarted && (e.key === ' ' || e.key === 'Enter')) this.start();
+          if (!this.gameStarted && (e.key === ' ' || e.key === 'Enter')) {
+            this.startGame();
+          }
         });
-        document.addEventListener('keyup', e => this.keys[e.key.toLowerCase()] = false);
+
+        document.addEventListener('keyup', (e) => {
+          this.keys[e.key.toLowerCase()] = false;
+        });
 
         this.canvas.addEventListener('click', () => {
-          if (!this.gameStarted) this.start();
-          else if (this.gameOver) this.restart();
+          if (!this.gameStarted) {
+            this.startGame();
+          } else if (this.gameOver) {
+            this.restart();
+          }
         });
 
         this.canvas.addEventListener('touchstart', () => {
-          if (!this.gameStarted) this.start();
-          else if (this.gameOver) this.restart();
+          if (!this.gameStarted) {
+            this.startGame();
+          } else if (this.gameOver) {
+            this.restart();
+          }
         });
 
         this.canvas.addEventListener('touchmove', (e) => {
           e.preventDefault();
-          const x = e.touches[0].clientX;
-          const mid = window.innerWidth / 2;
-          if (x < mid && this.player.x > 0) this.player.x -= this.player.speed;
-          else if (x >= mid && this.player.x < this.canvas.width - this.player.width) this.player.x += this.player.speed;
+          const touchX = e.touches[0].clientX;
+          const screenMid = window.innerWidth / 2;
+          if (touchX < screenMid && this.player.x > 0) {
+            this.player.x -= this.player.speed;
+          } else if (touchX >= screenMid && this.player.x < this.canvas.width - this.player.width) {
+            this.player.x += this.player.speed;
+          }
         }, { passive: false });
+
+        window.addEventListener('resize', () => {
+          this.resizeCanvas();
+          this.player.x = Math.min(this.player.x, this.canvas.width - this.player.width);
+        });
       }
 
-      start() {
+      startGame() {
         this.gameStarted = true;
         this.gameOver = false;
         document.getElementById('gameInstructions').classList.add('hidden');
@@ -116,47 +157,45 @@
       update() {
         if (!this.gameStarted || this.gameOver) return;
 
-        if ((this.keys['a'] || this.keys['arrowleft']) && this.player.x > 0)
+        if ((this.keys['a'] || this.keys['arrowleft']) && this.player.x > 0) {
           this.player.x -= this.player.speed;
-        if ((this.keys['d'] || this.keys['arrowright']) && this.player.x < this.canvas.width - this.player.width)
+        }
+        if ((this.keys['d'] || this.keys['arrowright']) && this.player.x < this.canvas.width - this.player.width) {
           this.player.x += this.player.speed;
-      }
-
-      draw() {
-        this.ctx.fillStyle = '#111';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // player
-        this.ctx.fillStyle = '#00ffff';
-        this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
-
-        if (this.gameOver) {
-          this.ctx.fillStyle = '#fff';
-          this.ctx.font = '30px Arial';
-          this.ctx.textAlign = 'center';
-          this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2);
         }
       }
 
-      loop() {
+      draw() {
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.fillStyle = '#00ffff';
+        this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
+      }
+
+      gameLoop() {
         this.update();
         this.draw();
-        requestAnimationFrame(() => this.loop());
+        requestAnimationFrame(() => this.gameLoop());
       }
 
       restart() {
         this.score = 0;
-        this.level = 1;
         this.speed = 0;
-        this.gameOver = false;
+        this.level = 1;
         this.obstacles = [];
+        this.powerUps = [];
+        this.particles = [];
         this.gameStarted = false;
+        this.gameOver = false;
         this.player.x = this.canvas.width / 2 - this.player.width / 2;
         document.getElementById('gameInstructions').classList.remove('hidden');
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => new NeonRunner());
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(() => new NeonRunner(), 100);
+    });
   </script>
 </body>
 </html>
